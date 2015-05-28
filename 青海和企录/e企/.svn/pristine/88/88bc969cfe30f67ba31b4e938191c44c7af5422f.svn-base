@@ -1,0 +1,14 @@
+//
+//  CreateEnterPriseViewController.h
+//  e企
+//
+//  Created by zw on 15/4/20.
+//  Copyright (c) 2015年 QYB. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface CreateEnterPriseViewController : UIViewController
+@property (nonatomic, strong) NSString *account;
+@property (nonatomic, strong) NSString *password;
+@end

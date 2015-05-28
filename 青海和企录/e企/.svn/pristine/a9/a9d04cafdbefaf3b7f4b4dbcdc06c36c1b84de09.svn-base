@@ -1,0 +1,72 @@
+//
+//  HuiyiDetailViewController.m
+//  e企
+//
+//  Created by a on 15/5/6.
+//  Copyright (c) 2015年 QYB. All rights reserved.
+//
+
+#import "HuiyiDetailViewController.h"
+#import "HuiyiData.h"
+#import "HuiyiTableViewCell.h"
+#import "SqlAddressData.h"
+#import "LogicHelper.h"
+#define HIGHT 5  //每个label间隔为5
+@interface HuiyiDetailViewController ()
+
+@end
+
+@implementation HuiyiDetailViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    NSLog(@"%@",self.huiyidata.conf_id);
+    _titlelabel.text=[NSString stringWithFormat:@"会议主题：%@",_huiyidata.conf_name];
+    [self restLabeframe:_titlelabel aboveLabel:nil];
+    NSString *time=[HuiyiTableViewCell getTimeStringFromTimeNumberstring:_huiyidata.conf_time];
+    _timelabel.text=[NSString stringWithFormat:@"会议时间：%@",time];
+    [self restLabeframe:_timelabel aboveLabel:_titlelabel];
+    _didianlabel.text=[NSString stringWithFormat:@"会议地点：%@",_huiyidata.address];
+    [self restLabeframe:_didianlabel aboveLabel:_timelabel];
+    _contentlabel.text=[NSString stringWithFormat:@"会议内容：%@",_huiyidata.content];
+    [self restLabeframe:_contentlabel aboveLabel:_didianlabel];
+     EmployeeModel *e=  [SqlAddressData  queryMemberInfoWithPhone:_huiyidata.creator_uid];//根据手机号uid获取联系人；
+    NSString *faqitime=[HuiyiTableViewCell getTimeStringFromTimeNumberstring:_huiyidata.create_time];
+    _faqiLabel.text=[NSString stringWithFormat:@"发起:%@  %@",e.name,faqitime];
+    CGRect rect= _faqiView.frame;
+    rect.origin.y=_contentlabel.frame.size.height+_contentlabel.frame.origin.y+HIGHT;
+    _faqiView.frame=rect;
+    _scrollview.contentSize=CGSizeMake([UIScreen mainScreen].bounds.size.width, _faqiView.frame.size.height+_faqiView.frame.origin.y+10);
+}
+
+-(void)restLabeframe:(UILabel*)label aboveLabel:(UILabel *)aboveLabel
+{//通过上面的label自动调整当前label。
+    CGFloat h= [LogicHelper hightWith:label.text width:label.frame.size.width attributesDict:@{NSFontAttributeName : _titlelabel.font}];
+    CGRect rect=label.frame;
+    rect.size.height=h;
+    if (aboveLabel) {
+        rect.origin.y=aboveLabel.frame.origin.y+aboveLabel.frame.size.height+HIGHT;
+    }
+    label.frame=rect;
+}
+
+- (IBAction)back:(UIBarButtonItem *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

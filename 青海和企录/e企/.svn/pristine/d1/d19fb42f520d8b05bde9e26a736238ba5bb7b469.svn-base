@@ -1,0 +1,108 @@
+//
+//  HuiyiViewController.m
+//  e企
+//
+//  Created by a on 15/4/28.
+//  Copyright (c) 2015年 QYB. All rights reserved.
+//
+
+#import "HuiyiViewController.h"
+#import "Download.h"
+#import "HuiyiTableViewCell.h"
+#import "HuiyiData.h"
+#import "MacroDefines.h"
+#import "HuiyiDetailViewController.h"
+@interface HuiyiViewController ()<DownloadDelegate>
+@property(nonatomic,strong)Download *download;
+@property(nonatomic,strong) NSMutableArray *dataArray;
+@end
+
+@implementation HuiyiViewController
+NSString* getHost(int page,int count){
+    return [NSString stringWithFormat:@"http://%@/eas/conf/user_timeline?gid=%@&uid=%@&page=%d&count=%d",HTTP_IP,ORG_ID,USER_ID,page,count];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.tableView.delegate=self;
+    self.tableView.dataSource=self;
+    self.navigationController.navigationBar.barTintColor=[UIColor colorWithRed:56/255.0 green:112/255.0 blue:237/255.0 alpha:1];
+    _download=[[Download alloc]init];
+    _download.delegate=self;
+    _dataArray=[[NSMutableArray alloc]init];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [_download downloadWithURLString:getHost(1,20)];
+    
+}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return _dataArray.count;
+}
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    HuiyiTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"HuiyiTableViewCell"];
+    HuiyiData *data=_dataArray[indexPath.row];
+    [cell initCellByHuiyidata:data];
+    return cell;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"pushHuiyiDetail"]) {
+        NSLog(@"点击cell推出详情");
+        HuiyiTableViewCell *cell=(HuiyiTableViewCell*)sender;
+        HuiyiDetailViewController *huiyiDetail=segue.destinationViewController;
+        huiyiDetail.huiyidata=cell.huiyidata;
+    }
+}
+
+-(void)downloadDidFinishLoading:(Download *)download
+{
+   NSLog(@"%@",_download.downloadDictionary);
+    //[_dataArray setArray:_download.downloadDictionary[@"confs"]];
+    [_dataArray removeAllObjects];
+    NSArray *array=_download.downloadDictionary[@"confs"];
+    for (NSDictionary *dict in array) {
+        HuiyiData *hdata=[[HuiyiData alloc]init];
+        hdata.address=dict[@"address"];
+        hdata.conf_id=[NSString stringWithFormat:@"%@",dict[@"conf_id"]];
+        hdata.conf_name=dict[@"conf_name"];
+        if ([dict[@"conf_time"] integerValue]) {
+           hdata.conf_time=[NSString stringWithFormat:@"%@",dict[@"conf_time"]];
+        }
+        hdata.confirmed_members=dict[@"confirmed_members"];
+        hdata.content=dict[@"content"];
+        hdata.create_time=[NSString stringWithFormat:@"%@",dict[@"create_time"]];
+        hdata.creator_gid=[NSString stringWithFormat:@"%@",dict[@"creator_gid"]];
+        hdata.creator_uid=[NSString stringWithFormat:@"%@",dict[@"creator_uid"]];
+        hdata.noconfirm_members=dict[@"noconfirm_members"];
+        hdata.notify_type=[NSString stringWithFormat:@"%@",dict[@"notify_type"]];
+        [_dataArray addObject:hdata];
+    }
+    
+    [_tableView reloadData];
+}
+
+
+- (IBAction)back:(UIBarButtonItem *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

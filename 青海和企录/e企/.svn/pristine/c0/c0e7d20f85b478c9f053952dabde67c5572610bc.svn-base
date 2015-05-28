@@ -1,0 +1,51 @@
+//
+//  HuiyiDetailViewController.m
+//  e企
+//
+//  Created by a on 15/5/6.
+//  Copyright (c) 2015年 QYB. All rights reserved.
+//
+
+#import "HuiyiDetailViewController.h"
+#import "HuiyiData.h"
+#import "HuiyiTableViewCell.h"
+#import "SqlAddressData.h"
+@interface HuiyiDetailViewController ()
+
+@end
+
+@implementation HuiyiDetailViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    _scrollview.contentSize=CGSizeMake([UIScreen mainScreen].bounds.size.width, 600);
+    NSLog(@"%@",self.huiyidata.conf_id);
+    _titlelabel.text=[NSString stringWithFormat:@"会议主题：%@",_huiyidata.conf_name];
+    NSString *time=[HuiyiTableViewCell getTimeStringFromTimeNumberstring:_huiyidata.conf_time];
+    _timelabel.text=[NSString stringWithFormat:@"会议时间：%@",time];
+    _didianlabel.text=[NSString stringWithFormat:@"会议地点：%@",_huiyidata.address];
+    _contentlabel.text=[NSString stringWithFormat:@"会议内容：%@",_huiyidata.content];
+     EmployeeModel *e=  [SqlAddressData  queryMemberInfoWithPhone:_huiyidata.creator_uid];//根据手机号uid获取联系人；
+    _faqiLabel.text=[NSString stringWithFormat:@"发起:%@",e.name];
+    _faqiTimelabel.text=[HuiyiTableViewCell getTimeStringFromTimeNumberstring:_huiyidata.create_time];
+}
+- (IBAction)back:(UIBarButtonItem *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

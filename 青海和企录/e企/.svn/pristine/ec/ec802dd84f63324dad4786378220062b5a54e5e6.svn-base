@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>3EA71AD4-63A2-4FC8-B792-735C52ED5511</string>
+	<key>IDESourceControlProjectName</key>
+	<string>mailcore2</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>19a92ea4-7452-11e3-8a8c-396895a783ed++7467</key>
+		<string>http://218.206.178.27/RCS/src/trunk/eClient-iOS</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>e企/mailcore2-master/build-mac/mailcore2.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>19a92ea4-7452-11e3-8a8c-396895a783ed++7467</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>19a92ea4-7452-11e3-8a8c-396895a783ed++7467</key>
+		<string>http://218.206.178.27/RCS</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>http://218.206.178.27/RCS/src/trunk/eClient-iOS/e%E4%BC%81/mailcore2-master/build-mac/mailcore2.xcodeproj</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>19a92ea4-7452-11e3-8a8c-396895a783ed++7467</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>19a92ea4-7452-11e3-8a8c-396895a783ed++7467</string>
+			<key>IDESourceControlWCCName</key>
+			<string>eClient-iOS</string>
+		</dict>
+	</array>
+</dict>
+</plist>
